@@ -13,7 +13,6 @@ def is_blank(str):
     if str == []:
         return True
 
-
 @app.route('/signup', methods=['POST'])
 def validate_input():
     username = request.form['username']
@@ -46,15 +45,15 @@ def validate_input():
         verifypass_error = 'Password does not match!'
         verifypass = ''
 
-    # if is_blank(email):
-    #     email = ''
-    # else:
-    #     if not "@" or not "." or " " in email:
-    #         email_error = 'Not a valid email address'
-    #         email = ''
-    #     elif len(email) > 20 or len(email) < 3:
-    #         email_error = 'email length out of range (3-20)'
-    #         email = ''
+    if email:
+        if email.count("@") < 1 or email.count("@") > 1:
+            email_error = 'Not a valid email'
+        if email.count(".") < 1 or email.count(".") > 1:
+            email_error = 'Not a valid email'
+        if " " in email:
+            email_error = "Not a valid email"
+        if len(email) < 3 or len(email) > 20:
+            email_error = "Email length out of range(3-20)"
 
     if not username_error and not password_error and not verifypass_error and not email_error:
         return redirect('/welcome?username={0}'.format(username))
